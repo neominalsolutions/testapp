@@ -1,37 +1,37 @@
-import React, { useState } from 'react';
+import { useRoutes } from 'react-router-dom';
 import './App.css';
+import Layout from './layout/Layout';
+import Users from './pages/Users';
+
 
 function App() {
-  // class component
-  // function component
+  // routing işlemlerini app.js üzerinden halledicez
+  const routes = useRoutes([
+    {
+      path: '',
+      element: <Layout />, // layout
+      children: [
+        {
+          path: '',
+          element: <>Anasayfa</> // ilk yönlendirilecek olan sayfa
+        },
+        {
+          path: 'about',
+          element: <>Hakkımızda</>
+        },
+        {
+          path: 'users',
+          element: <Users />
+        },
+        {
+          path: 'users/:id',
+          element: <>Kullanıcı Detay </>
+        }
+      ]
+    }
+  ])
 
-  // state tanımı
-  // component içerisinde bir değişiklik olduğu durumda kullandığımız component o anki durumunu ekrana yansıttığımız yapı.
-
-  let c = 0;
-
-  const [counter, setCounter] = useState(0); // initial value
-  // property tanımı yaptık.
-  // function ve değişkenler return dışında tanımlanır
-  const arttir = () => { // function arrow function, daha çok kullanılır
-    setCounter(counter + 1); // sayac değişkeni 1 arttır
-    // setCounter counter değerini değiştirir.
-    c++;
-  }
-  function azalt() {
-    setCounter(counter - 1); // sayacı 1 azalt
-    c--;
-  }
-  return (
-    <div className="App">
-      <div>Sayac: {counter}</div>
-      <div>Sayac 2: {c}</div>
-      {/* <button onclick="artir()"></button> */}
-      <button onClick={arttir}>Arttır</button>
-      <button onClick={azalt}>Azalt</button>
-    </div>
-
-  );
+  return routes;
 }
 
 export default App;
